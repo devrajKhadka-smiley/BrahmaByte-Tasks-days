@@ -54,10 +54,12 @@ def check_current_user(request: Request):
 
         user = next((u for u in Users if u["email"] == email))
         
+        
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
 
         return user
 
-    except JWTError:
+    except Exception as e:
+        return cr.error(message="",data=str(e))
         raise HTTPException(status_code=401, detail="Invalid token hi")

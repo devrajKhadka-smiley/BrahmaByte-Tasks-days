@@ -31,6 +31,3 @@ class UserLogin(BaseModel):
         "extra": "forbid"
     }
     
-class Token(BaseModel):
-    access_token: str
-    token_type: str
