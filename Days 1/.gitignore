@@ -38,3 +38,7 @@ ENV/
 # Windows specific files
 Thumbs.db
 Desktop.ini
+
+# Docker (keeping Dockerfile and docker-compose.yml in repo)
+# Only ignore docker-compose override files
+docker-compose.override.yml
