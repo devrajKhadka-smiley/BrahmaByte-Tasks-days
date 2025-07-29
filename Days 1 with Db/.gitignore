@@ -1,0 +1,44 @@
+# Python-related files
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+*.pdb
+*.coveragerc
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+
+# Virtual Environment directories
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# FastAPI specific files
+*.db
+*.sqlite3
+*.log
+
+# Configuration files
+.env
+
+# IDE or Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
+Desktop.ini
+
+# Docker (keeping Dockerfile and docker-compose.yml in repo)
+# Only ignore docker-compose override files
+docker-compose.override.yml
