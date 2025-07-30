@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class UserCreate(BaseModel):
     name: str
     email: str
@@ -11,4 +12,8 @@ class UserLogin(BaseModel):
     email: str
     password: str
     model_config = {"extra": "forbid"}
-    
+
+
+class UserResponse(BaseModel):
+    name: str
+    email: str

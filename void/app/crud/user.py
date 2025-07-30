@@ -1,24 +1,17 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import Session
 from app.models.Users import User
-from app.schemas.UserSchema import UserCreate, UserLogin
+from app.schemas.UserSchema import UserCreate, UserLogin, UserResponse
 from app.dependency.auth import hash_password, verify_password
 from sqlalchemy.inspection import inspect
 from sqlalchemy import select
 
-def to_dict(obj):
-    return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
 
 async def create_user(db: AsyncSession, user: UserCreate):
     hashed_pw = hash_password(user.password)
     db_user = User(name=user.name, email=user.email, hashed_password=hashed_pw)
     db.add(db_user)
     await db.commit()
-    await db.refresh(db_user)  
-
-    user_dict = to_dict(db_user)
-    user_dict.pop("hashed_password", None)
-    return user_dict
+    return UserResponse(name=db_user.name, email=db_user.email)
 
 
 async def login_user(db: AsyncSession, user: UserLogin):
@@ -32,9 +25,12 @@ async def login_user(db: AsyncSession, user: UserLogin):
 
 async def get_all_users(db: AsyncSession):
     result = await db.execute(select(User))
-    return result.scalars().all()
+    print("Fetching all users: ", result)
+    mainresult = result.scalars().all()
+    print("Fetched users: ", mainresult)
+    return mainresult
+
 
 async def get_user_by_email(db: AsyncSession, email: str):
     result = await db.execute(select(User).where(User.email == email))
     return result.scalars().first()
-
